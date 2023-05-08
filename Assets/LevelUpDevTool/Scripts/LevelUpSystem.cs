@@ -66,6 +66,14 @@ public class LevelUpSystem : MonoBehaviour
     [SerializeField]
     AudioSource LevelUpSoundEffect;
 
+    [Header("Test Features")]
+    [SerializeField]
+    public int _testIncrease = 20;
+    [SerializeField]
+    public int _testDecrease = 20;
+    [SerializeField]
+    public bool _testActive = true;
+
     public LevelUpSystem()
     {
         playerLevel = 1;
@@ -129,16 +137,20 @@ public class LevelUpSystem : MonoBehaviour
         Destroy(newSound.gameObject, newSound.clip.length);
     }
 
+    //used to test the functionality of the system
     public void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if(_testActive == true)
         {
-            increaseXP(20);
-        }
-        if (Input.GetKeyDown("backspace"))
-        {
-            decreaseXP(20);
-            XPBar.displayXP(currentXP, requiredXpToLevelUp);
+            if (Input.GetKeyDown("space"))
+            {
+                increaseXP(_testIncrease);
+            }
+            if (Input.GetKeyDown("backspace"))
+            {
+                decreaseXP(_testDecrease);
+                XPBar.displayXP(currentXP, requiredXpToLevelUp);
+            }
         }
     }
 

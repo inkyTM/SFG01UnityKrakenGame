@@ -983,7 +983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLevel: 1
   currentXP: 0
-  requiredXPtoLevelUp: 100
+  requiredXpToLevelUp: 100
   increaseInRXP: 50
   currentHP: 100
   maxHP: 100
@@ -1000,6 +1000,9 @@ MonoBehaviour:
   XPBar: {fileID: 481929821}
   _levelSoundActive: 1
   LevelUpSoundEffect: {fileID: 1417250518}
+  _testIncrease: 20
+  _testDecrease: 20
+  _testActive: 1
 --- !u!1 &1181432537
 GameObject:
   m_ObjectHideFlags: 0
