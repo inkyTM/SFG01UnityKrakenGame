@@ -982,7 +982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerLevel: 1
-  currentXP: 0
+  currentXP: 100
   requiredXpToLevelUp: 100
   increaseInRXP: 50
   currentHP: 100
@@ -990,7 +990,7 @@ MonoBehaviour:
   maxHPIncrease: 20
   refillHP: 1
   moveSpeed: 20
-  moveSpeedIncrease: 3
+  moveSpeedIncrease: 5
   attack: 10
   attackIncrease: 1
   defense: 10
@@ -1061,15 +1061,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Hp: 0/0
+  m_text: 'Hp: 100/100
 
-    Spd: 0
+    Spd: 20
 
-    Str: 0
+    Str: 10
 
-    Def: 0
+    Def: 10
 
-    Jmp: 0'
+    Jmp: 15'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
