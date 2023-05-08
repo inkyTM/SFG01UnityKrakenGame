@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LevelUpSystem : MonoBehaviour
 {
@@ -23,43 +24,60 @@ public class LevelUpSystem : MonoBehaviour
     [SerializeField]
     //player's current HP
     public int currentHP;
+    [SerializeField]
     //player's current max HP
     public int maxHP;
+    [SerializeField]
     //how much the player's max HP increases per level
     public int maxHPIncrease;
+    [SerializeField]
+    //whether or not the player's HP refills to full upon a level up
+    public bool refillHP = true;
+    [SerializeField]
     //player's current movement speed
     public int moveSpeed;
+    [SerializeField]
     //how much the player's movement speed increases per level
     public int moveSpeedIncrease;
+    [SerializeField]
     //player's current attack stat
     public int attack;
+    [SerializeField]
     //how much the player's attack stat increases per level
     public int attackIncrease;
+    [SerializeField]
     //player's current defense stat
     public int defense;
+    [SerializeField]
     //how much the player's defense stat increases per level
     public int defenseIncrease;
+    [SerializeField]
     //player's current jump power
     public int jumpPower;
+    [SerializeField]
     //how much the player's jump power increases per level
     public int jumpPowerIncrease;
 
-    [Header("XPBar")]
+    [Header("UI")]
     [SerializeField]
-    public Slider slider;
-
-    public void Update()
-    {
-        slider.maxValue = requiredXPtoLevelUp;
-        slider.value = currentXP;
-    }
+    private LevelXPBar XPBar;
+    [SerializeField]
+    public bool _levelSoundActive = true;
+    [SerializeField]
+    AudioSource LevelUpSoundEffect;
 
     public LevelUpSystem()
     {
         playerLevel = 1;
         currentXP = 0;
-        requiredXPtoLevelUp = 100;
-        increaseInRXP = 50;
+        requiredXPtoLevelUp = 80;
+        increaseInRXP = 40;
+    }
+
+    public void Start()
+    {
+        XPBar.displayXP(currentXP, requiredXPtoLevelUp);
+        XPBar.displayLevel(playerLevel);
     }
 
     public void increaseXP(int increase)
@@ -67,15 +85,55 @@ public class LevelUpSystem : MonoBehaviour
         currentXP += increase;
         if(currentXP >= requiredXPtoLevelUp)
         {
-            playerLevel++;
-            maxHP += maxHPIncrease;
+            levelUp();
+
+        }
+        displayUpdates();
+    }
+
+    public void levelUp()
+    {
+        //increase player level
+        playerLevel++;
+        //increase each of the player's stats by their designated amounts
+        maxHP += maxHPIncrease;
+        moveSpeed += moveSpeedIncrease;
+        attack += attackIncrease;
+        defense += defenseIncrease;
+        jumpPower += jumpPowerIncrease;
+        //refill the player's HP to full if this option was selected
+        if (refillHP == true)
+        {
             currentHP = maxHP;
-            moveSpeed += moveSpeedIncrease;
-            attack += attackIncrease;
-            defense += defenseIncrease;
-            jumpPower += jumpPowerIncrease;
-            currentXP -= requiredXPtoLevelUp;
-            requiredXPtoLevelUp += increaseInRXP;
+        }
+        //set up for the next level by reducing the player's XP and resetting the requirement
+        currentXP -= requiredXPtoLevelUp;
+        requiredXPtoLevelUp += increaseInRXP;
+        if (_levelSoundActive == true)
+        {
+            playLevelUpSoundEffect();
+        }
+    }
+
+    public void displayUpdates()
+    {
+        //update the display for both the player's XP and their Level
+        XPBar.displayXP(currentXP, requiredXPtoLevelUp);
+        XPBar.displayLevel(playerLevel);
+        XPBar.displayStats(currentHP, maxHP, moveSpeed, attack, defense, jumpPower);
+    }
+
+    public void playLevelUpSoundEffect()
+    {
+        AudioSource newSound = Instantiate(LevelUpSoundEffect);
+        Destroy(newSound.gameObject, newSound.clip.length);
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown("space"))
+        {
+            increaseXP(20);
         }
     }
 
