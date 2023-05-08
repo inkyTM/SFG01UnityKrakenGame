@@ -15,7 +15,7 @@ public class LevelUpSystem : MonoBehaviour
     public float currentXP;
     [SerializeField]
     //the amount of XP needed for the player to level up
-    public float requiredXPtoLevelUp;
+    public float requiredXpToLevelUp;
     [SerializeField]
     //changes the amount of XP needed for subsequent level ups by this amount
     public float increaseInRXP;
@@ -70,20 +70,20 @@ public class LevelUpSystem : MonoBehaviour
     {
         playerLevel = 1;
         currentXP = 0;
-        requiredXPtoLevelUp = 80;
-        increaseInRXP = 40;
+        requiredXpToLevelUp = 100;
+        increaseInRXP = 50;
     }
 
     public void Start()
     {
-        XPBar.displayXP(currentXP, requiredXPtoLevelUp);
+        XPBar.displayXP(currentXP, requiredXpToLevelUp);
         XPBar.displayLevel(playerLevel);
     }
 
     public void increaseXP(int increase)
     {
         currentXP += increase;
-        if(currentXP >= requiredXPtoLevelUp)
+        if(currentXP >= requiredXpToLevelUp)
         {
             levelUp();
 
@@ -107,8 +107,8 @@ public class LevelUpSystem : MonoBehaviour
             currentHP = maxHP;
         }
         //set up for the next level by reducing the player's XP and resetting the requirement
-        currentXP -= requiredXPtoLevelUp;
-        requiredXPtoLevelUp += increaseInRXP;
+        currentXP -= requiredXpToLevelUp;
+        requiredXpToLevelUp += increaseInRXP;
         if (_levelSoundActive == true)
         {
             playLevelUpSoundEffect();
@@ -118,7 +118,7 @@ public class LevelUpSystem : MonoBehaviour
     public void displayUpdates()
     {
         //update the display for both the player's XP and their Level
-        XPBar.displayXP(currentXP, requiredXPtoLevelUp);
+        XPBar.displayXP(currentXP, requiredXpToLevelUp);
         XPBar.displayLevel(playerLevel);
         XPBar.displayStats(currentHP, maxHP, moveSpeed, attack, defense, jumpPower);
     }
@@ -134,6 +134,11 @@ public class LevelUpSystem : MonoBehaviour
         if (Input.GetKeyDown("space"))
         {
             increaseXP(20);
+        }
+        if (Input.GetKeyDown("backspace"))
+        {
+            decreaseXP(20);
+            XPBar.displayXP(currentXP, requiredXpToLevelUp);
         }
     }
 
